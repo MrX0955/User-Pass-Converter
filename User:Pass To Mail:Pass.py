@@ -1,29 +1,32 @@
 from time import sleep
-
+from os import system
 
 class Settings:
-    name = input(" [?] Combolist Name (Must be in the same folder) : ")
+    name = input("\n [?] Combolist Name (Must be in the same folder) : ")
     if len(name) == 0:
-        print(" Wrong Input the Combolist Name")
+        print("\n [!] Wrong Input the Combolist Name")
         sleep(1)
         exit()
     mrx = input(
-        "[?] Mail Types --> [@gmail.com,@hotmail.com,@yahoo.com,@outlook.com, @yahoo.com.tr, "
+        "\n [?] Mail Types --> [@gmail.com,@hotmail.com,@yahoo.com,@outlook.com, @yahoo.com.tr, "
         "@outlook.com.tr, @icloud.com, @edu.com] : ")
     if len(mrx) == 0:
-        print(" Wrong Input the Mail Type")
+        print("\n [!] Wrong Input the Mail Type")
         sleep(1)
         exit()
     izinli_karakterler = (
         '@gmail.com,@hotmail.com,@yahoo.com,@outlook.com, @yahoo.com.tr, @outlook.com.tr, @icloud.com, @edu.com ')
 
 
-for mails in Settings.izinli_karakterler:
-    if mails in Settings.mrx:
-        print(" [+] Success.")
-        break
-    else:
-        break
+class Permissions:
+    for mails in Settings.izinli_karakterler:
+        if mails in Settings.mrx:
+            print("\n [+] Success, Loading...")
+            sleep(2)
+            system("cls")
+            break
+        else:
+            break
 
 try:
 
@@ -44,11 +47,11 @@ try:
                 except Exception:
                     pass
         else:
-            print("Empty File...")
+            print("\n [!] Empty File...")
             sleep(1)
             exit()
 
 except Exception:
-    print("Can not find the file...")
+    print("\n [!] Can not find the file...")
     sleep(1)
     exit()
