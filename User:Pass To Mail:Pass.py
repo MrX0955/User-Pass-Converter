@@ -1,48 +1,54 @@
-logo = f"""
-   ___________                        __________                    _____                                            __           
-   \_   _____/_______   ____    ____  \______   \_______   ____    /  _  \    ____    ____    ____   __ __   ____  _/  |_   ______
-    |    __)  \_  __ \_/ __ \ _/ __ \  |     ___/\_  __ \_/ __ \  /  /_\  \ _/ ___\ _/ ___\  /  _ \ |  |  \ /    \ \   __\ /  ___/
-    |     \    |  | \/\  ___/ \  ___/  |    |     |  | \/\  ___/ /    |    \\  \___ \  \___ (  <_> )|  |  /|   |  \ |  |   \___ \ 
-    \___  /    |__|    \___  > \___  > |____|     |__|    \___  >\____|__  / \___  > \___  > \____/ |____/ |___|  / |__|  /____  >
-        \/                 \/      \/                         \/         \/      \/      \/                     \/             \/ 
-                                                                                 """
-print("\n" + logo + "\n")
+from time import sleep
 
-input(" [INFO] UYARI! MAIL TÜRÜ YAZARKEN [gmail ise @gmail.com] YAZMALISINIZ! DEVAM ETMEK İÇİN BİR TUŞA TIKLAYIN!")
-name = input(" [?] Combonuzun İsmi (Aynı Klasörde Olmalıdır sonuna .txt ekleyin.) : ")
-mrx = input(" [?] İstediğiniz mail türünü yazın. [@gmail.com,@hotmail.com,@yahoo.com,@outlook.com, @yahoo.com.tr, @outlook.com.tr, @icloud.com, @edu.com] : ")
-izinli_karakterler = ('@gmail.com,@hotmail.com,@yahoo.com,@outlook.com, @yahoo.com.tr, @outlook.com.tr, @icloud.com, @edu.com ')
 
-for mails in izinli_karakterler:
-    if mails in mrx:
-        print(" [+] Success. -->> [DefaceR]MrX ..! <<--")
+class Settings:
+    name = input(" [?] Combolist Name (Must be in the same folder) : ")
+    if len(name) == 0:
+        print(" Wrong Input the Combolist Name")
+        sleep(1)
+        exit()
+    mrx = input(
+        "[?] Mail Types --> [@gmail.com,@hotmail.com,@yahoo.com,@outlook.com, @yahoo.com.tr, "
+        "@outlook.com.tr, @icloud.com, @edu.com] : ")
+    if len(mrx) == 0:
+        print(" Wrong Input the Mail Type")
+        sleep(1)
+        exit()
+    izinli_karakterler = (
+        '@gmail.com,@hotmail.com,@yahoo.com,@outlook.com, @yahoo.com.tr, @outlook.com.tr, @icloud.com, @edu.com ')
+
+
+for mails in Settings.izinli_karakterler:
+    if mails in Settings.mrx:
+        print(" [+] Success.")
         break
     else:
-        print(" [-] What you looking? ")
         break
 
 try:
 
-    with open(name, errors="ignore", encoding="utf-8") as file:
+    with open(Settings.name, errors="ignore", encoding="utf-8") as file:
 
         combolist = file.readlines()
 
         if len(combolist) > 0:
 
-            savefile = open(f"{mrx}--pass.txt", "a")
+            savefile = open(f"{Settings.mrx}--pass.txt", "a")
 
             for combo in combolist:
 
                 try:
-
-                    user = combo.split("\n")[0].split(":")[0].strip() + mrx
+                    user = combo.split("\n")[0].split(":")[0].strip() + Settings.mrx
                     password = combo.split("\n")[0].split(":")[1].strip()
                     savefile.write("{}:{}\n".format(user, password))
-
                 except Exception:
                     pass
         else:
-            input("Boş Dosya ...")
+            print("Empty File...")
+            sleep(1)
+            exit()
 
 except Exception:
-    input("Dosya Bulunamadı...")
+    print("Can not find the file...")
+    sleep(1)
+    exit()
