@@ -1,6 +1,7 @@
 from time import sleep
 from os import system
 
+
 class Settings:
     name = input("\n [?] Combolist Name (Must be in the same folder) : ")
     if len(name) == 0:
@@ -28,30 +29,29 @@ class Permissions:
         else:
             break
 
-try:
 
-    with open(Settings.name, errors="ignore", encoding="utf-8") as file:
+class MainProgress:
+    try:
+        with open(Settings.name, errors="ignore", encoding="utf-8") as file:
 
-        combolist = file.readlines()
+            if len(file.readlines()) > 0:
 
-        if len(combolist) > 0:
+                savefile = open(f"{Settings.mrx}--pass.txt", "a")
 
-            savefile = open(f"{Settings.mrx}--pass.txt", "a")
+                for combo in file.readlines():
 
-            for combo in combolist:
+                    try:
+                        user = combo.split("\n")[0].split(":")[0].strip() + Settings.mrx
+                        password = combo.split("\n")[0].split(":")[1].strip()
+                        savefile.write("{}:{}\n".format(user, password))
+                    except Exception:
+                        pass
+            else:
+                print("\n [!] Empty File...")
+                sleep(1)
+                exit()
 
-                try:
-                    user = combo.split("\n")[0].split(":")[0].strip() + Settings.mrx
-                    password = combo.split("\n")[0].split(":")[1].strip()
-                    savefile.write("{}:{}\n".format(user, password))
-                except Exception:
-                    pass
-        else:
-            print("\n [!] Empty File...")
-            sleep(1)
-            exit()
-
-except Exception:
-    print("\n [!] Can not find the file...")
-    sleep(1)
-    exit()
+    except Exception:
+        print("\n [!] Can not find the file...")
+        sleep(1)
+        exit()
